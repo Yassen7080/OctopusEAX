@@ -1,0 +1,16 @@
+name: Build App
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+    - uses: actions/checkout@v4
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+    - name: Build App
+      run: msbuild MasonEAX.sln /p:Configuration=Release /p:Platform=x64
+    - name: Upload Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: OctopusEAX-CleanBinary
+        path: build/MasonEAX/OctopusEAX.exe
